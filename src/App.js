@@ -1,23 +1,55 @@
-import logo from './logo.svg';
+
+import { useState } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
+import About from './components/About/About';
+import Country from './components/Country/Country';
+import Main from './components/Layout/Main/Main';
+
+import Service from './components/Service/Service';
+
+import { Header } from './Header/Header';
 
 function App() {
+  const [con,setcon] = useState([])
+  function setData(x){
+    setcon ([...con,x])
+}
+  const router = createBrowserRouter([
+    {
+      path:'/',
+        element:<Main></Main>,
+      children:[
+        {
+          path: '/home',
+          element: <Header></Header>
+        },
+          {
+            path:'about',
+            element:<About></About>
+          },
+          {
+            path:'service',
+            loader:async()=>{
+              return  fetch('https://restcountries.com/v3.1/all')
+              },
+            element:<Service con={con} setData={setData}></Service>
+          },
+          {
+            path: 'countrys',
+            element: <Country con={con}></Country>
+          }
+      ]
+    },
+    {
+      path:'*',
+      element: <p>404 Error</p>
+    }
+    
+  ])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <RouterProvider router={router}></RouterProvider>
     </div>
   );
 }
