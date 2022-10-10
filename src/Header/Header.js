@@ -1,4 +1,4 @@
-import { Feature } from "../components/Body/Body";
+import { Feature } from "../components/Body/Feature";
 
 
 

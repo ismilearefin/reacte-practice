@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import {  createContext, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import About from './components/About/About';
@@ -10,11 +10,14 @@ import Service from './components/Service/Service';
 
 import { Header } from './Header/Header';
 
+
+
+export  const newContext = createContext();
 function App() {
   const [con,setcon] = useState([])
-  function setData(x){
-    setcon ([...con,x])
-}
+    const setData =(x)=>{
+    setcon ((prev) => [...prev,x] )
+};
   const router = createBrowserRouter([
     {
       path:'/',
@@ -33,8 +36,9 @@ function App() {
             loader:async()=>{
               return  fetch('https://restcountries.com/v3.1/all')
               },
-            element:<Service con={con} setData={setData}></Service>
+            element:<newContext.Provider value={con}><Service setData={setData}></Service></newContext.Provider>
           },
+          // con={con}
           {
             path: 'countrys',
             element: <Country con={con}></Country>

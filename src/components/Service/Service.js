@@ -3,19 +3,18 @@
 // import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import Countrys from './Countrys/Countrys';
+import Showdata from './Showdata';
 
-const Service = ({con,setData}) => {
+const Service = ({setData}) => {
     // const [con,setcon] = useState([])
     const countrys = useLoaderData();
     // function setData(x){
     //     setcon ([...con,x])
     // }
-    console.log(con)
+    // console.log(con)
     return (
         <div>
-            <div className='p-4 bg-slate-200 fixed left-14 rounded-md'>
-            <h2 className='font-bold'>Selected Item: {con.length}</h2>
-            </div>
+            <Showdata></Showdata>
             <div className='md:grid grid-cols-3'>
             {/* {
                 countrys.map(country => <Countrys key={country.cca3} country={country} setData={setData}></Countrys>)
